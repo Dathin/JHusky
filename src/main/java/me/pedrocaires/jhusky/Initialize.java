@@ -30,7 +30,7 @@ public class Initialize {
         Files.createDirectories(Paths.get(scriptsPath, "_"));
         Path createdFile = Files.createFile(Paths.get(scriptsPath, "_", "husky.sh"));
         createdFile.toFile().setExecutable(true);
-        Files.write(createdFile, Collections.singleton("#!/bin/sh\n" +
+        Files.writeString(createdFile, "#!/bin/sh\n" +
                 "if [ -z \"$husky_skip_init\" ]; then\n" +
                 "  debug () {\n" +
                 "    if [ \"$HUSKY_DEBUG\" = \"1\" ]; then\n" +
@@ -60,10 +60,10 @@ public class Initialize {
                 "  fi\n" +
                 "\n" +
                 "  exit $exitCode\n" +
-                "fi\n"));
+                "fi\n");
         Path createdFile2 = Files.createFile(Paths.get(scriptsPath, "_", ".gitignore"));
         createdFile2.toFile().setExecutable(true);
-        Files.write(createdFile2, Collections.singleton("*"));
+        Files.writeString(createdFile2, "*");
 
 
         // Change dir of hooks
