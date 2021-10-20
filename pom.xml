@@ -8,7 +8,6 @@
     <artifactId>jhusky</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
-
     <name>JHusky</name>
 
     <properties>
