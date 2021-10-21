@@ -46,11 +46,9 @@ public class Install extends AbstractMojo {
             }
 
             Files.createDirectories(Paths.get(directory));
-            Path huskyUtilDirectory = Paths.get(directory, "_");
-            if(Files.exists(huskyUtilDirectory)) {
-                Files.delete(huskyUtilDirectory);
-            }
-            Files.createDirectories(huskyUtilDirectory);
+            Files.deleteIfExists(Paths.get(directory, "_", ".gitignore"));
+            Files.deleteIfExists(Paths.get(directory, "_", "husky.sh"));
+            Files.createDirectories(Paths.get(directory, "_"));
             Path createdFile = Files.createFile(Paths.get(directory, "_", "husky.sh"));
             createdFile.toFile().setExecutable(true);
             Files.write(createdFile, ("#!/bin/sh\n" +
