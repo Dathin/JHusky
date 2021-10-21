@@ -1,4 +1,4 @@
-package me.pedrocaires.jhusky;
+package io.github.dathin.jhusky;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.Collections;
+
 
 @Mojo(name = "add")
 public class Add extends AbstractMojo {

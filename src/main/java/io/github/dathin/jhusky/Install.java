@@ -1,4 +1,4 @@
-package me.pedrocaires.jhusky;
+package io.github.dathin.jhusky;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 
 @Mojo(name = "install")
 public class Install extends AbstractMojo {

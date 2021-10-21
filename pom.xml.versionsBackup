@@ -6,7 +6,7 @@
 
     <groupId>io.github.dathin</groupId>
     <artifactId>jhusky</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <name>JHusky</name>
@@ -34,6 +34,11 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>me.pedrocaires</groupId>
+                <artifactId>jhusky</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </plugin>
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>

@@ -1,10 +1,11 @@
-package me.pedrocaires.jhusky;
+package io.github.dathin.jhusky;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 
 import java.io.IOException;
+
 
 @Mojo(name = "uninstall")
 public class Uninstall extends AbstractMojo {

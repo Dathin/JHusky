@@ -1,13 +1,4 @@
-# Initialize
-Recreate on install
+- If someone starts using it I will refactor to improve the code readability
+- accept maven parameters
+- recreate on install
 
-# Uninstall
-OK
-
-# Add
-OK
-
-maven plugin,
-better code,
-test if it will have same file permissions when uploaded to git,
-accept maven parameters
