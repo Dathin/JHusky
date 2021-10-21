@@ -6,7 +6,9 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,6 +21,7 @@ public class InstallCommand extends AbstractMojo {
 
     private GitValidator gitValidator;
 
+
     @Override
     public void execute() throws MojoExecutionException {
         gitValidator = new GitValidator(getLog());
@@ -27,10 +30,10 @@ public class InstallCommand extends AbstractMojo {
             gitValidator.isGitRepository(System.getProperty("user.dir"));
 
             String customDirHelp = "https://git.io/Jc3F9";
-            if (directory.contains("..")) {
+            if(directory.contains("..")) {
                 throw new MojoExecutionException(".. not allowed (see" + customDirHelp + ")");
             }
-            if (!Files.exists(Paths.get(".git"))) {
+            if (!Files.exists(Paths.get(".git"))){
                 throw new MojoExecutionException(".git can't be found (see" + customDirHelp + ")");
             }
 
@@ -87,7 +90,7 @@ public class InstallCommand extends AbstractMojo {
 
             getLog().info("Git hooks installed");
 
-        } catch (InterruptedException | IOException ex) {
+        } catch (InterruptedException | IOException ex){
             ex.printStackTrace();
             throw new MojoExecutionException("Unable to uninstall: " + ex.getMessage());
         }

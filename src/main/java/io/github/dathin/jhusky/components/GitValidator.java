@@ -31,7 +31,7 @@ public class GitValidator {
             while ((line = buf.readLine()) != null) {
                 logger.info(line);
             }
-            return process.exitValue();
+            throw new MojoExecutionException(String.format("Process exit value: %s", process.exitValue()));
         }
         return process.exitValue();
     }

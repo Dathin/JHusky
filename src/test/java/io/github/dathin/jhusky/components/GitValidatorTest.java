@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class GitValidatorTest {
 
@@ -40,10 +39,9 @@ public class GitValidatorTest {
         assertEquals(EXIT_SUCCESS, exitValue);
     }
 
-    @Test
+    @Test(expected = MojoExecutionException.class)
     public void shouldReturnFailure() throws MojoExecutionException, IOException, InterruptedException {
-        int exitValue = gitValidator.isGitRepository(folder.getRoot().getAbsolutePath());
-        assertTrue(exitValue != EXIT_SUCCESS);
+        gitValidator.isGitRepository(folder.getRoot().getAbsolutePath());
     }
 
 }
