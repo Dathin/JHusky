@@ -17,16 +17,16 @@ import java.util.Collections;
 @Mojo(name = "add")
 public class Add extends AbstractMojo {
 
-    @Parameter(property = "jHuskyFolderPath", defaultValue = ".husky/post-commit")
-    private String jHuskyFolderPath;
+    @Parameter(property = "hookPath")
+    private String hookPath;
 
-    @Parameter(property = "add.command", defaultValue = "echo xD")
+    @Parameter(property = "command")
     private String command;
 
     @Override
     public void execute() throws MojoExecutionException {
         try {
-            Path huskyCommandPath = Paths.get(jHuskyFolderPath);
+            Path huskyCommandPath = Paths.get(hookPath);
             if (!Files.exists(huskyCommandPath.getParent())) {
                 throw new MojoExecutionException("Can't create hook, " + huskyCommandPath.getParent().getFileName().toString() + " directory doesn't exist (try running install goal)");
             }

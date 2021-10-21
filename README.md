@@ -2,7 +2,7 @@
 
 > Modern native Git hooks made easy for java environments
 
-JHusky improves your commits and more 🐶 *jwoof!*
+JHusky improves your commits and more 🐶 *Jwoof!*
 
 # Install
 
@@ -28,24 +28,27 @@ Include it to your project as a plugin
 Run install goal once:
 
 ```sh
-mvn jhusky:install .husky
+mvn jhusky:install -Ddirectory=.husky
 ```
 
 Add a hook:
 
 ```sh
-mvn jhusky:add .husky/pre-push "mvn clean test"
-git add .husky/pre-push
+mvn jhusky:add -DhookPath=.husky/pre-commit -Dcommand="mvn clean test"
+git add .husky/pre-commit
 ```
 
 Make a commit:
 
 ```sh
 git commit -m "Keep calm and commit"
-# `npm clean test` will run
+# `mvn clean test` will run
 ```
 
-#Uninstall
+# Hooks list
+- Check the list with all [hooks](https://git-scm.com/docs/githooks#_hooks)
+
+# Uninstall
 
 If you didn't like it you can just run uninstall goal and remove the plugin
 
