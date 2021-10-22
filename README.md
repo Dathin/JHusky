@@ -15,7 +15,7 @@ Include it to your project as a plugin
             <plugin>
                 <groupId>io.github.dathin</groupId>
                 <artifactId>jhusky</artifactId>
-                <version>1.0.1</version> <!--  This is the currently latest version  -->
+                <version>1.0.2</version> <!--  This is the currently latest version  -->
             </plugin>
             <!--  ... Other plugins  -->
         </plugins>
