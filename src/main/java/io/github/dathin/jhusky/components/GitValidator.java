@@ -33,6 +33,7 @@ public class GitValidator {
             }
             throw new MojoExecutionException(String.format("Process exit value: %s", process.exitValue()));
         }
+
         return process.exitValue();
     }
 }

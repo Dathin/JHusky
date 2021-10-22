@@ -1,14 +1,13 @@
 package io.github.dathin.jhusky;
 
 import io.github.dathin.jhusky.components.GitValidator;
+import io.github.dathin.jhusky.components.HuskyInstall;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,27 +19,17 @@ public class InstallCommand extends AbstractMojo {
     private String directory;
 
     private GitValidator gitValidator;
-
+    private HuskyInstall huskyInstall;
 
     @Override
     public void execute() throws MojoExecutionException {
         gitValidator = new GitValidator(getLog());
+        huskyInstall = new HuskyInstall(getLog());
+
         try {
-            // Check if it is a git repo
             gitValidator.isGitRepository(System.getProperty("user.dir"));
+            huskyInstall.prepareEnviroment(directory != null ? directory : ".husky");
 
-            String customDirHelp = "https://git.io/Jc3F9";
-            if(directory.contains("..")) {
-                throw new MojoExecutionException(".. not allowed (see" + customDirHelp + ")");
-            }
-            if (!Files.exists(Paths.get(".git"))){
-                throw new MojoExecutionException(".git can't be found (see" + customDirHelp + ")");
-            }
-
-            Files.createDirectories(Paths.get(directory));
-            Files.deleteIfExists(Paths.get(directory, "_", ".gitignore"));
-            Files.deleteIfExists(Paths.get(directory, "_", "husky.sh"));
-            Files.createDirectories(Paths.get(directory, "_"));
             Path createdFile = Files.createFile(Paths.get(directory, "_", "husky.sh"));
             createdFile.toFile().setExecutable(true);
             Files.write(createdFile, ("#!/bin/sh\n" +
@@ -78,7 +67,6 @@ public class InstallCommand extends AbstractMojo {
             createdFile2.toFile().setExecutable(true);
             Files.write(createdFile2, "*".getBytes());
 
-
             // Change dir of hooks
             ProcessBuilder builder2 = new ProcessBuilder("git", "config", "core.hooksPath", directory);
             Process process2 = builder2.start();
@@ -89,8 +77,7 @@ public class InstallCommand extends AbstractMojo {
             }
 
             getLog().info("Git hooks installed");
-
-        } catch (InterruptedException | IOException ex){
+        } catch (InterruptedException | IOException ex) {
             ex.printStackTrace();
             throw new MojoExecutionException("Unable to uninstall: " + ex.getMessage());
         }
