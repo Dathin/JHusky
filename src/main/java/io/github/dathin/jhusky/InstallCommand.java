@@ -1,5 +1,6 @@
 package io.github.dathin.jhusky;
 
+import io.github.dathin.jhusky.components.GitValidator;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -12,30 +13,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-
 @Mojo(name = "install")
-public class Install extends AbstractMojo {
+public class InstallCommand extends AbstractMojo {
 
     @Parameter(property = "directory", defaultValue = ".husky")
     private String directory;
 
+    private GitValidator gitValidator;
+
+
     @Override
     public void execute() throws MojoExecutionException {
+        gitValidator = new GitValidator(getLog());
         try {
             // Check if it is a git repo
-            ProcessBuilder builder = new ProcessBuilder("git", "rev-parse");
-
-            builder.inheritIO().redirectOutput(ProcessBuilder.Redirect.PIPE);
-            Process process = builder.start();
-            process.waitFor();
-            if (process.exitValue() != 0){
-                BufferedReader buf = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                String line = "";
-                while ((line=buf.readLine())!=null) {
-                    getLog().info(line);
-                }
-                throw new MojoExecutionException("");
-            }
+            gitValidator.isGitRepository(System.getProperty("user.dir"));
 
             String customDirHelp = "https://git.io/Jc3F9";
             if(directory.contains("..")) {
