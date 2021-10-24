@@ -20,7 +20,7 @@ public class HuskyInstall {
     public void prepareEnviroment(String directory) throws MojoExecutionException {
 
         String customDirHelp = "https://git.io/Jc3F9";
-        if(directory.contains("..")) {
+        if (directory.contains("..")) {
             throw new MojoExecutionException(".. not allowed (see" + customDirHelp + ")");
         }
 
@@ -31,7 +31,8 @@ public class HuskyInstall {
             Files.createDirectories(Paths.get(directory, HUSKY_SH_DIR));
             log.info(String.format("Husky configuration in: %s", directory));
         } catch (IOException e) {
-            log.info(String.format("error = %s", e.getMessage()));
+            log.error(String.format("error = %s", e.getMessage()));
+            throw new MojoExecutionException(String.format("Error installing Husky, error = %s", e.getMessage()));
         }
     }
 

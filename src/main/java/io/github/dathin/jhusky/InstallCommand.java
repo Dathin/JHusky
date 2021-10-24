@@ -28,7 +28,7 @@ public class InstallCommand extends AbstractMojo {
 
         try {
             gitValidator.isGitRepository(System.getProperty("user.dir"));
-            huskyInstall.prepareEnviroment(directory != null ? directory : ".husky");
+            huskyInstall.prepareEnviroment(directory);
 
             Path createdFile = Files.createFile(Paths.get(directory, "_", "husky.sh"));
             createdFile.toFile().setExecutable(true);
@@ -63,15 +63,14 @@ public class InstallCommand extends AbstractMojo {
                     "\n" +
                     "  exit $exitCode\n" +
                     "fi\n").getBytes());
+
             Path createdFile2 = Files.createFile(Paths.get(directory, "_", ".gitignore"));
             createdFile2.toFile().setExecutable(true);
             Files.write(createdFile2, "*".getBytes());
 
-            // Change dir of hooks
             ProcessBuilder builder2 = new ProcessBuilder("git", "config", "core.hooksPath", directory);
             Process process2 = builder2.start();
             process2.waitFor();
-
             if (process2.exitValue() != 0) {
                 throw new MojoExecutionException("Git hooks failed to install");
             }
