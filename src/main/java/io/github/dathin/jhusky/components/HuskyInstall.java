@@ -17,7 +17,8 @@ public class HuskyInstall {
         this.log = log;
     }
 
-    public void prepareEnviroment(String directory) throws MojoExecutionException {
+    public void prepareEnvironment(String directory) throws MojoExecutionException, IOException, InterruptedException {
+        GitValidator.isGitRepository(directory, this.log);
 
         String customDirHelp = "https://git.io/Jc3F9";
         if (directory.contains("..")) {

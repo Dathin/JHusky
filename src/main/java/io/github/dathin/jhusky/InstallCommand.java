@@ -1,6 +1,5 @@
 package io.github.dathin.jhusky;
 
-import io.github.dathin.jhusky.components.GitValidator;
 import io.github.dathin.jhusky.components.HuskyInstall;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -18,17 +17,14 @@ public class InstallCommand extends AbstractMojo {
     @Parameter(property = "directory", defaultValue = ".husky")
     private String directory;
 
-    private GitValidator gitValidator;
     private HuskyInstall huskyInstall;
 
     @Override
     public void execute() throws MojoExecutionException {
-        gitValidator = new GitValidator(getLog());
         huskyInstall = new HuskyInstall(getLog());
 
         try {
-            gitValidator.isGitRepository(System.getProperty("user.dir"));
-            huskyInstall.prepareEnviroment(directory);
+            huskyInstall.prepareEnvironment(directory);
 
             Path createdFile = Files.createFile(Paths.get(directory, "_", "husky.sh"));
             createdFile.toFile().setExecutable(true);

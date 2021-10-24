@@ -10,13 +10,11 @@ import java.io.InputStreamReader;
 
 public class GitValidator {
 
-    private Log logger;
-
-    public GitValidator(Log logger) {
-        this.logger = logger;
+    private GitValidator() {
+        throw new RuntimeException("Utility class");
     }
 
-    public int isGitRepository(String directory) throws IOException, InterruptedException, MojoExecutionException {
+    public static int isGitRepository(String directory, Log logger) throws IOException, InterruptedException, MojoExecutionException {
         ProcessBuilder processBuilder = new ProcessBuilder("git", "rev-parse");
         if (directory != null) {
             processBuilder.directory(new File(directory));
@@ -33,7 +31,6 @@ public class GitValidator {
             }
             throw new MojoExecutionException(String.format("Process exit value: %s", process.exitValue()));
         }
-
         return process.exitValue();
     }
 }
