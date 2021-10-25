@@ -1,1 +1,1 @@
-mvn
+mvn spring-javaformat:validate
