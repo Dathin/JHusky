@@ -29,6 +29,7 @@ public class GitValidatorTest {
 
         int exitValue = GitValidator.isGitRepository(folder.getRoot().getAbsolutePath(), new SystemStreamLog());
         assertEquals(EXIT_SUCCESS, exitValue);
+        assertEquals(EXIT_SUCCESS, exitValue);
     }
 
     @Test(expected = MojoExecutionException.class)
