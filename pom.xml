@@ -63,6 +63,11 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>io.github.dathin</groupId>
+                <artifactId>jhusky</artifactId>
+                <version>1.0.1</version>
+            </plugin>
+            <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
                 <version>1.6.7</version>

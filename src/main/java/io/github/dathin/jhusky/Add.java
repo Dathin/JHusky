@@ -1,6 +1,5 @@
 package io.github.dathin.jhusky;
 
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -14,7 +13,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 @Mojo(name = "add")
-public class Add extends AbstractMojo {
+public class Add extends HuskyCommand {
 
 	@Parameter(property = "hookPath")
 	private String hookPath;
@@ -23,28 +22,42 @@ public class Add extends AbstractMojo {
 	private String command;
 
 	@Override
-	public void execute() throws MojoExecutionException {
-		try {
-			Path huskyCommandPath = Paths.get(hookPath);
-			if (!Files.exists(huskyCommandPath.getParent())) {
-				throw new MojoExecutionException(
-						"Can't create hook, " + huskyCommandPath.getParent().getFileName().toString()
-								+ " directory doesn't exist (try running install goal)");
-			}
-			if (Files.exists(huskyCommandPath)) {
-				Files.write(huskyCommandPath, Arrays.asList("\n", command), StandardOpenOption.APPEND);
-				getLog().info("Updated");
-			}
-			else {
-				Path createdFile2 = Files.createFile(huskyCommandPath);
-				createdFile2.toFile().setExecutable(true);
-				Files.write(createdFile2, Collections.singletonList(command));
-				getLog().info("Created");
-			}
+	public void command() throws MojoExecutionException, IOException {
+		Path commandPath = Paths.get(hookPath);
+
+		checkParentDirectoryExists(commandPath);
+
+		if (Files.exists(commandPath)) {
+			updateCommand(commandPath, command);
 		}
-		catch (IOException ex) {
-			throw new MojoExecutionException("Unable to add: " + ex.getMessage());
+		else {
+			createCommand(commandPath, command);
 		}
+	}
+
+	private void checkParentDirectoryExists(Path huskyCommandPath) throws MojoExecutionException {
+		if (!Files.exists(huskyCommandPath.getParent())) {
+			throw new MojoExecutionException(
+					"Can't create hook, " + huskyCommandPath.getParent().getFileName().toString()
+							+ " directory doesn't exist (try running install goal)");
+		}
+	}
+
+	private void updateCommand(Path commandPath, String command) throws IOException {
+		Files.write(commandPath, Arrays.asList("\n", command), StandardOpenOption.APPEND);
+		getLog().info("Updated");
+	}
+
+	private void createCommand(Path commandPath, String command) throws IOException {
+		Path createdFile2 = Files.createFile(commandPath);
+		createdFile2.toFile().setExecutable(true);
+		Files.write(createdFile2, Collections.singletonList(command));
+		getLog().info("Created");
+	}
+
+	@Override
+	String getCommandName() {
+		return "Add";
 	}
 
 }
