@@ -28,7 +28,6 @@ public class Add extends AbstractMojo {
         try {
             Path huskyCommandPath = Paths.get(hookPath);
             if (!Files.exists(huskyCommandPath.getParent())) {
-                System.out.println("tst");
                 throw new MojoExecutionException("Can't create hook, " + huskyCommandPath.getParent().getFileName().toString() + " directory doesn't exist (try running install goal)");
             }
             if (Files.exists(huskyCommandPath)) {
