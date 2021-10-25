@@ -19,38 +19,39 @@ import static org.mockito.ArgumentMatchers.any;
 
 public class HuskyInstallTest {
 
-    HuskyInstall huskyInstall;
+	HuskyInstall huskyInstall;
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+	@Rule
+	public TemporaryFolder folder = new TemporaryFolder();
 
-    @Before
-    public void setUp() {
-        huskyInstall = new HuskyInstall(new SystemStreamLog());
-    }
+	@Before
+	public void setUp() {
+		huskyInstall = new HuskyInstall(new SystemStreamLog());
+	}
 
-    @Test
-    public void shouldCreateDirectories() throws MojoExecutionException, IOException, InterruptedException {
-        try (MockedStatic<GitValidator> utilities = Mockito.mockStatic(GitValidator.class)) {
-            utilities.when(() -> GitValidator.isGitRepository(any(), any())).thenReturn(0);
-            huskyInstall.prepareEnvironment(folder.getRoot().getAbsolutePath().concat("/.husky"));
+	@Test
+	public void shouldCreateDirectories() throws MojoExecutionException, IOException, InterruptedException {
+		try (MockedStatic<GitValidator> utilities = Mockito.mockStatic(GitValidator.class)) {
+			utilities.when(() -> GitValidator.isGitRepository(any(), any())).thenReturn(0);
+			huskyInstall.prepareEnvironment(folder.getRoot().getAbsolutePath().concat("/.husky"));
 
-            Path huskyRoot = Paths.get(folder.getRoot().getAbsolutePath().concat("/.husky"));
-            Path subFolder = Paths.get(folder.getRoot().getAbsolutePath().concat("/.husky/_"));
-            boolean existsHuskyRoot = Files.exists(huskyRoot);
-            boolean existsSubFolder = Files.exists(subFolder);
+			Path huskyRoot = Paths.get(folder.getRoot().getAbsolutePath().concat("/.husky"));
+			Path subFolder = Paths.get(folder.getRoot().getAbsolutePath().concat("/.husky/_"));
+			boolean existsHuskyRoot = Files.exists(huskyRoot);
+			boolean existsSubFolder = Files.exists(subFolder);
 
-            assertTrue(existsHuskyRoot);
-            assertTrue(existsSubFolder);
-        }
-    }
+			assertTrue(existsHuskyRoot);
+			assertTrue(existsSubFolder);
+		}
+	}
 
-    @Test(expected = MojoExecutionException.class)
-    public void givenDirectoryInvalid_shouldReturnException() throws MojoExecutionException, IOException, InterruptedException {
-        try (MockedStatic<GitValidator> utilities = Mockito.mockStatic(GitValidator.class)) {
-            utilities.when(() -> GitValidator.isGitRepository(any(), any())).thenReturn(0);
-            huskyInstall.prepareEnvironment(folder.getRoot().getAbsolutePath().concat("/..husky"));
-        }
-    }
+	@Test(expected = MojoExecutionException.class)
+	public void givenDirectoryInvalid_shouldReturnException()
+			throws MojoExecutionException, IOException, InterruptedException {
+		try (MockedStatic<GitValidator> utilities = Mockito.mockStatic(GitValidator.class)) {
+			utilities.when(() -> GitValidator.isGitRepository(any(), any())).thenReturn(0);
+			huskyInstall.prepareEnvironment(folder.getRoot().getAbsolutePath().concat("/..husky"));
+		}
+	}
 
 }
