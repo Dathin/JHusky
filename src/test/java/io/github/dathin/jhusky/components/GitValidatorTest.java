@@ -15,25 +15,25 @@ import static org.junit.Assert.assertEquals;
 
 public class GitValidatorTest {
 
-    public int EXIT_SUCCESS = 0;
+	public int EXIT_SUCCESS = 0;
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+	@Rule
+	public TemporaryFolder folder = new TemporaryFolder();
 
-    Repository newlyCreatedRepo;
+	Repository newlyCreatedRepo;
 
-    @Test
-    public void shouldReturnSuccess() throws MojoExecutionException, IOException, InterruptedException {
-        newlyCreatedRepo = FileRepositoryBuilder.create(new File(folder.getRoot().getAbsolutePath().concat("/.git")));
-        newlyCreatedRepo.create();
+	@Test
+	public void shouldReturnSuccess() throws MojoExecutionException, IOException, InterruptedException {
+		newlyCreatedRepo = FileRepositoryBuilder.create(new File(folder.getRoot().getAbsolutePath().concat("/.git")));
+		newlyCreatedRepo.create();
 
-        int exitValue = GitValidator.isGitRepository(folder.getRoot().getAbsolutePath(), new SystemStreamLog());
-        assertEquals(EXIT_SUCCESS, exitValue);
-    }
+		int exitValue = GitValidator.isGitRepository(folder.getRoot().getAbsolutePath(), new SystemStreamLog());
+		assertEquals(EXIT_SUCCESS, exitValue);
+	}
 
-    @Test(expected = MojoExecutionException.class)
-    public void shouldReturnFailure() throws MojoExecutionException, IOException, InterruptedException {
-        GitValidator.isGitRepository(folder.getRoot().getAbsolutePath(), new SystemStreamLog());
-    }
+	@Test(expected = MojoExecutionException.class)
+	public void shouldReturnFailure() throws MojoExecutionException, IOException, InterruptedException {
+		GitValidator.isGitRepository(folder.getRoot().getAbsolutePath(), new SystemStreamLog());
+	}
 
 }
