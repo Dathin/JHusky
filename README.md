@@ -25,7 +25,7 @@ Include it to your project as a plugin
 
 # Usage
 
-Run install goal once:
+Run install goal once per machine:
 
 ```sh
 mvn jhusky:install -Ddirectory=.husky
