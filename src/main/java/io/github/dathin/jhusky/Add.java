@@ -38,8 +38,8 @@ public class Add extends HuskyCommand {
 	private void checkParentDirectoryExists(Path huskyCommandPath) throws MojoExecutionException {
 		if (!Files.exists(huskyCommandPath.getParent())) {
 			throw new MojoExecutionException(
-					"Can't create hook, " + huskyCommandPath.getParent().getFileName().toString()
-							+ " directory doesn't exist (try running install goal)");
+					String.format("Can't create hook, %s directory doesn't exist (try running install goal)",
+							huskyCommandPath.getParent().getFileName().toString()));
 		}
 	}
 
@@ -49,9 +49,9 @@ public class Add extends HuskyCommand {
 	}
 
 	private void createCommand(Path commandPath, String command) throws IOException {
-		Path createdFile2 = Files.createFile(commandPath);
-		createdFile2.toFile().setExecutable(true);
-		Files.write(createdFile2, Collections.singletonList(command));
+		Path createdCommandPath = Files.createFile(commandPath);
+		createdCommandPath.toFile().setExecutable(true);
+		Files.write(createdCommandPath, Collections.singletonList(command));
 		getLog().info("Created");
 	}
 

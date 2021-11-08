@@ -40,11 +40,11 @@ public class Install extends HuskyCommand {
 		getLog().info("Git hooks installed");
 	}
 
-	private void prepareEnvironment(String directory) throws MojoExecutionException, IOException, InterruptedException {
-		String customDirHelp = "https://git.io/Jc3F9";
+	private void prepareEnvironment(String directory) throws MojoExecutionException, IOException {
+		String customDirHelpUrl = "https://git.io/Jc3F9";
 
 		if (directory.contains("..")) {
-			throw new MojoExecutionException(".. not allowed (see" + customDirHelp + ")");
+			throw new MojoExecutionException(String.format(".. not allowed (see %s)", customDirHelpUrl));
 		}
 
 		Files.createDirectories(Paths.get(directory));
@@ -54,9 +54,9 @@ public class Install extends HuskyCommand {
 	}
 
 	private void installHuskyFiles(String directory) throws IOException {
-		Path createdFile = Files.createFile(Paths.get(directory, HUSKY_SH_DIR, "husky.sh"));
-		createdFile.toFile().setExecutable(true);
-		Files.write(createdFile,
+		Path huskySh = Files.createFile(Paths.get(directory, HUSKY_SH_DIR, "husky.sh"));
+		huskySh.toFile().setExecutable(true);
+		Files.write(huskySh,
 				("#!/bin/sh\n" + "if [ -z \"$husky_skip_init\" ]; then\n" + "  debug () {\n"
 						+ "    if [ \"$HUSKY_DEBUG\" = \"1\" ]; then\n" + "      echo \"husky (debug) - $1\"\n"
 						+ "    fi\n" + "  }\n" + "\n" + "  readonly hook_name=\"$(basename \"$0\")\"\n"
@@ -68,8 +68,8 @@ public class Install extends HuskyCommand {
 						+ "    echo \"husky - $hook_name hook exited with code $exitCode (error)\"\n" + "  fi\n" + "\n"
 						+ "  exit $exitCode\n" + "fi\n").getBytes());
 
-		Path createdFile2 = Files.createFile(Paths.get(directory, HUSKY_SH_DIR, ".gitignore"));
-		Files.write(createdFile2, "*".getBytes());
+		Path gitignore = Files.createFile(Paths.get(directory, HUSKY_SH_DIR, ".gitignore"));
+		Files.write(gitignore, "*".getBytes());
 	}
 
 	@Override
