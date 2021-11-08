@@ -35,7 +35,7 @@ public class Install extends HuskyCommand {
 
 		installHuskyFiles(directory);
 
-		processUtils.runAndHandleProcess(directory, "git", "config", "core.hooksPath");
+		processUtils.runAndHandleProcess(directory, "git", "config", "core.hooksPath", directory);
 
 		getLog().info("Git hooks installed");
 	}

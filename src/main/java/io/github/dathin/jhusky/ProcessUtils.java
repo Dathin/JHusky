@@ -17,10 +17,10 @@ public class ProcessUtils {
 		this.log = log;
 	}
 
-	public void runAndHandleProcess(String directory, String... command)
+	public void runAndHandleProcess(String executionDirectory, String... command)
 			throws IOException, InterruptedException, MojoExecutionException {
 		ProcessBuilder processBuilder = new ProcessBuilder(command);
-		processBuilder.directory(Files.createDirectories(Paths.get(directory)).toFile());
+		processBuilder.directory(Files.createDirectories(Paths.get(executionDirectory)).toFile());
 		processBuilder.inheritIO().redirectOutput(ProcessBuilder.Redirect.PIPE);
 
 		Process process = processBuilder.start();

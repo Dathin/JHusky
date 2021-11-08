@@ -6,7 +6,7 @@
 
     <groupId>io.github.dathin</groupId>
     <artifactId>jhusky</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.2-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <name>JHusky</name>
@@ -65,7 +65,7 @@
             <plugin>
                 <groupId>io.github.dathin</groupId>
                 <artifactId>jhusky</artifactId>
-                <version>1.0.1</version>
+                <version>1.0.2-SNAPSHOT</version>
             </plugin>
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
