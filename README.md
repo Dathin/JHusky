@@ -53,7 +53,7 @@ git commit -m "Keep calm and commit"
 If you didn't like it you can just run uninstall goal and remove the plugin
 
 ```sh
-mvn jhusky:uninstall
+mvn jhusky:uninstall -Ddirectory=.husky
 ```
 
 # Inspiration

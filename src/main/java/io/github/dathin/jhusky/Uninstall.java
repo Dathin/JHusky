@@ -1,23 +1,35 @@
 package io.github.dathin.jhusky;
 
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 
 import java.io.IOException;
 
 @Mojo(name = "uninstall")
-public class Uninstall extends AbstractMojo {
+public class Uninstall extends HuskyCommand {
+
+	@Parameter(property = "directory", defaultValue = ".husky")
+	private String directory;
+
+	private final ProcessUtils processUtils;
+
+	public Uninstall() {
+		this.processUtils = new ProcessUtils(getLog());
+	}
+
+	public Uninstall(ProcessUtils processUtils) {
+		this.processUtils = processUtils;
+	}
 
 	@Override
-	public void execute() throws MojoExecutionException {
-		ProcessBuilder builder2 = new ProcessBuilder("git", "config", "--unset", "core.hooksPath");
-		try {
-			builder2.start();
-		}
-		catch (IOException ex) {
-			throw new MojoExecutionException("Unable to uninstall: " + ex.getMessage());
-		}
+	void command() throws InterruptedException, IOException, MojoExecutionException {
+		processUtils.runAndHandleProcess(directory, "git", "config", "--unset", "core.hooksPath");
+	}
+
+	@Override
+	String getCommandName() {
+		return "Uninstall";
 	}
 
 }
