@@ -31,9 +31,9 @@ public class Add extends HuskyCommand {
 
 	private void checkParentDirectoryExists(Path huskyCommandPath) throws MojoExecutionException {
 		if (!Files.exists(huskyCommandPath.getParent())) {
-			throw new MojoExecutionException(
-					String.format("Can't create hook, %s directory doesn't exist (try running install goal 'mvn jhusky:install')",
-							huskyCommandPath.getParent().getFileName().toString()));
+			throw new MojoExecutionException(String.format(
+					"Can't create hook, %s directory doesn't exist (try running install goal 'mvn jhusky:install')",
+					huskyCommandPath.getParent().getFileName().toString()));
 		}
 	}
 
