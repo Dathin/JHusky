@@ -6,7 +6,7 @@
 
     <groupId>io.github.dathin</groupId>
     <artifactId>jhusky</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.3-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <name>JHusky</name>
@@ -65,7 +65,7 @@
             <plugin>
                 <groupId>io.github.dathin</groupId>
                 <artifactId>jhusky</artifactId>
-                <version>1.0.2-SNAPSHOT</version>
+                <version>1.0.3-SNAPSHOT</version>
             </plugin>
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
@@ -161,7 +161,7 @@
                 <version>0.0.28</version>
                 <executions>
                     <execution>
-                        <phase>validate</phase>
+                        <phase>test</phase>
                         <inherited>true</inherited>
                         <goals>
                             <goal>validate</goal>
